@@ -1,0 +1,2 @@
+# HikingPlanner Backend Repository
+
