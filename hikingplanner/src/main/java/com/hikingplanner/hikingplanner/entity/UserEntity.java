@@ -24,5 +24,6 @@ public class UserEntity {
     private boolean agreed_personal;
     private String name;
     private String role;
+    private String type;
     
 }

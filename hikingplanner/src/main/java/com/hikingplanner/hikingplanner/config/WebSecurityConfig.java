@@ -52,10 +52,10 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .oauth2Login(oauth2->oauth2
-            .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
-            .userInfoEndpoint(endpoint->endpoint.userService(oAuth2UserService))
-            )
+            // .oauth2Login(oauth2->oauth2
+            // .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+            // .userInfoEndpoint(endpoint->endpoint.userService(oAuth2UserService))
+            // )
             .exceptionHandling(exceptionHandling->exceptionHandling
                 .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
             )
