@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.hikingplanner.hikingplanner.filter.JwtAuthenticationFilter;
+import com.hikingplanner.hikingplanner.handler.OAuth2SuccessHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final DefaultOAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
@@ -52,10 +54,12 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            // .oauth2Login(oauth2->oauth2
-            // .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
-            // .userInfoEndpoint(endpoint->endpoint.userService(oAuth2UserService))
-            // )
+            .oauth2Login(oauth2->oauth2
+            .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
+            .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+            .userInfoEndpoint(endpoint->endpoint.userService(oAuth2UserService))
+            .successHandler(oAuth2SuccessHandler)
+            )
             .exceptionHandling(exceptionHandling->exceptionHandling
                 .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
             )
