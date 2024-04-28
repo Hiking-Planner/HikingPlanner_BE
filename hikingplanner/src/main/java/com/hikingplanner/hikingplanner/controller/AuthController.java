@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hikingplanner.hikingplanner.dto.Request.auth.CheckCertificationRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.EmailCertificationRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.IdCheckRequestDto;
+import com.hikingplanner.hikingplanner.dto.Request.auth.SignInRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.SignUpRequestDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.CheckCertificationResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.EmailCertificationResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.IdCheckResponseDto;
+import com.hikingplanner.hikingplanner.dto.Response.auth.SignInResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignUpResponseDto;
 import com.hikingplanner.hikingplanner.service.AuthService;
 
@@ -55,6 +57,14 @@ public class AuthController {
         @RequestBody @Valid SignUpRequestDto requestBody
     ) {
         ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
+        return response;
+    }
+
+    @PostMapping("sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn (
+        @RequestBody @Valid SignInRequestDto requestBody
+    ) {
+        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
         return response;
     }
 }

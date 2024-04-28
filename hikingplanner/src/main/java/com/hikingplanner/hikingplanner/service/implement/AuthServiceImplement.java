@@ -1,5 +1,6 @@
 package com.hikingplanner.hikingplanner.service.implement;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,15 +10,18 @@ import com.hikingplanner.hikingplanner.common.CertificationNumber;
 import com.hikingplanner.hikingplanner.dto.Request.auth.CheckCertificationRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.EmailCertificationRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.IdCheckRequestDto;
+import com.hikingplanner.hikingplanner.dto.Request.auth.SignInRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.SignUpRequestDto;
 import com.hikingplanner.hikingplanner.dto.Response.ResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.CheckCertificationResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.EmailCertificationResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.IdCheckResponseDto;
+import com.hikingplanner.hikingplanner.dto.Response.auth.SignInResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignUpResponseDto;
 import com.hikingplanner.hikingplanner.entity.CertificationEntity;
 import com.hikingplanner.hikingplanner.entity.UserEntity;
 import com.hikingplanner.hikingplanner.provider.EmailProvider;
+import com.hikingplanner.hikingplanner.provider.JwtProvider;
 import com.hikingplanner.hikingplanner.repository.CertificationRepository;
 import com.hikingplanner.hikingplanner.repository.UserRepository;
 import com.hikingplanner.hikingplanner.service.AuthService;
@@ -32,6 +36,8 @@ public class AuthServiceImplement implements AuthService{
     private final UserRepository userRepository;
     private final EmailProvider emailProvider;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    private final JwtProvider jwtProvider;
     
     @Override
     public ResponseEntity<? super IdCheckResponseDto> idCheck(IdCheckRequestDto dto) {
@@ -118,6 +124,30 @@ public class AuthServiceImplement implements AuthService{
             return ResponseDto.dataseError();
         }
         return SignUpResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+        String token = null;
+
+        try {
+
+            String userId = dto.getId();
+            UserEntity userEntity = userRepository.findByUserId(userId);
+            if(userEntity == null) SignInResponseDto.signInFail();
+
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if(!isMatched) return SignInResponseDto.signInFail();
+
+            token = jwtProvider.create(userId);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.dataseError();
+        }
+        return SignInResponseDto.success(token);
     }
     
     
