@@ -10,19 +10,13 @@ import com.hikingplanner.hikingplanner.dto.Response.ResponseDto;
 import lombok.Getter;
 
 @Getter
-public class SignUpResponseDto extends ResponseDto{
-    private SignUpResponseDto() {
+public class CheckCertificationResponseDto extends ResponseDto{
+    private CheckCertificationResponseDto() {
         super();
     }
-
-    public static ResponseEntity<SignUpResponseDto> success() {
-        SignUpResponseDto responseBody = new SignUpResponseDto();
+    public static ResponseEntity<CheckCertificationResponseDto> success() {
+        CheckCertificationResponseDto responseBody = new CheckCertificationResponseDto();
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
-    }
-
-    public static ResponseEntity<ResponseDto> duplicateId() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATE_ID,ResponseMessage.DUPLICATE_ID);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
     public static ResponseEntity<ResponseDto> certificationFail() {

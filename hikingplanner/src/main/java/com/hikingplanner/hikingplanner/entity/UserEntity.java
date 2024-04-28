@@ -1,5 +1,9 @@
 package com.hikingplanner.hikingplanner.entity;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+
+import com.hikingplanner.hikingplanner.dto.Request.auth.SignUpRequestDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,6 +20,7 @@ public class UserEntity {
     @Id
     private String userId;
     private String password;
+    private String email;
     private String nickname;
     private String phoneNumber;
     private String address;
@@ -25,5 +30,13 @@ public class UserEntity {
     private String name;
     private String role;
     private String type;
+
+    public UserEntity(SignUpRequestDto dto) {
+        this.userId = dto.getId();
+        this.password=dto.getPassword();
+        this.email = dto.getEmail();
+        this.type = "app";
+        this.role = "ROLE_USER";
+    }
     
 }
