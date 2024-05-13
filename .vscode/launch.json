@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-HikingplannerApplication<hikingplanner>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hikingplanner.hikingplanner.HikingplannerApplication",
+      "projectName": "hikingplanner",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
