@@ -1,4 +1,4 @@
-/*package com.hikingplanner.hikingplanner.entity;
+package com.hikingplanner.hikingplanner.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,18 +18,30 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Getter
-@Entity(name="mountain_img")
-@Table(name="mountain_img")
+@Entity(name="trail")
+@Table(name="trail")
 public class TrailEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long mtimg_id;
+  private Long trail_id;
   
   @ManyToOne
-  @JoinColumn(name = "mountain_id")
+  @JoinColumn(name = "mountain_id", referencedColumnName = "mountain_id")
   private Mountain mountain;
 
-  private String img_url;
+  private String trail_name;
+  private Double total_length;
+  private Long up_time;
+  private Long down_time;
+  private String start_point;
+  private String end_point;
+  private String trail_comment;
+  private String difficulty;
+  private String traildata;
+  private Long hike_count;
 
-  private String img_name; 
-}*/
+  public Long getMountainId() {
+    return mountain.getMtid();
+}
+
+}

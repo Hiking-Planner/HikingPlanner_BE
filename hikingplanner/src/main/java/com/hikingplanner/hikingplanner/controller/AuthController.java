@@ -27,15 +27,18 @@ import com.hikingplanner.hikingplanner.dto.Response.auth.SignInResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignUpResponseDto;
 import com.hikingplanner.hikingplanner.service.AuthService;
 
-// import io.jsonwebtoken.io.IOException;
+import io.swagger.v3.oas.annotations.tags.Tag;
+//import io.jsonwebtoken.io.IOException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 
 
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Login API")
 public class AuthController {
     private final AuthService authService;
     

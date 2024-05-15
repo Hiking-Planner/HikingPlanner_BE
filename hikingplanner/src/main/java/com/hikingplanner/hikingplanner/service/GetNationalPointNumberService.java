@@ -48,12 +48,8 @@ public class GetNationalPointNumberService {
 
         String x2 = String.format("%d", (int)Math.ceil(x));
         String y2 = String.format("%d", (int)Math.ceil(y));
-        System.out.println(x2.length());
-        System.out.println(y2.length());
+
         int restCount = 4;
-        
-        System.out.println(x2.substring(0, x2.length() == 6 ? 1 : 2));
-        System.out.println(y2.substring(0, 2));
         
         // 앞 두자리를 숫자를 잘라서 해당 숫자의 한글을 가져오고, 나머지 좌표를 잘라서 합친다.
         String nationalPointNumber =
