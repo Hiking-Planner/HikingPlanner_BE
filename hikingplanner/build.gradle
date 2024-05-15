@@ -33,6 +33,8 @@ dependencies {
 	implementation group:'io.jsonwebtoken', name:'jjwt-api', version:'0.11.2'
 	implementation group:'io.jsonwebtoken', name:'jjwt-impl', version:'0.11.2'
 	implementation group:'io.jsonwebtoken', name:'jjwt-jackson', version:'0.11.2'
+  implementation 'org.locationtech.proj4j:proj4j:1.2.2'
+  implementation 'org.locationtech.proj4j:proj4j-epsg:1.2.2'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
