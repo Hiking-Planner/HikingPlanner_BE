@@ -2,7 +2,6 @@ package com.hikingplanner.hikingplanner.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Slf4j
 @RequestMapping("/api/v1/auth")
 @Tag(name = "긴급 신고 기능 API")
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package com.hikingplanner.hikingplanner.entity;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+//import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
 import com.hikingplanner.hikingplanner.dto.Request.auth.SignUpRequestDto;
 
