@@ -26,7 +26,7 @@ public class UserEntity {
     private String address;
     private String address_detail;
     private String profile_image;
-    private boolean agreed_personal;
+    private Boolean agreed_personal;
     private String name;
     private String role;
     private String type;
