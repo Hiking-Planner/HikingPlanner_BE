@@ -53,6 +53,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                 .permitAll()
+                .requestMatchers("/mountain_img/**").permitAll()
                 .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll()
                 .requestMatchers("/api/v1/user/**").hasRole("USER")
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")

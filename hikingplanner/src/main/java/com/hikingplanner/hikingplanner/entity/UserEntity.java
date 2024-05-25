@@ -1,6 +1,6 @@
 package com.hikingplanner.hikingplanner.entity;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+//import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
 import com.hikingplanner.hikingplanner.dto.Request.auth.SignUpRequestDto;
 
@@ -26,7 +26,7 @@ public class UserEntity {
     private String address;
     private String address_detail;
     private String profile_image;
-    private boolean agreed_personal;
+    private Boolean agreed_personal;
     private String name;
     private String role;
     private String type;
@@ -39,10 +39,13 @@ public class UserEntity {
         this.role = "ROLE_USER";
     }
 
-    public UserEntity (String userId, String email, String type) {
+    public UserEntity (String userId, String email,String type, String name, String phoneNumber, String profile_image) {
         this.userId = userId;
         this.password= "Password";
+        this.phoneNumber=phoneNumber;
+        this.name = name;
         this.email = email;
+        this.profile_image=profile_image;
         this.type = type;
         this.role = "ROLE_USER";
     }

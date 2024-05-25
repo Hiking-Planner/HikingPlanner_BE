@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 public class SosRequest {
   @Schema(description = "userid", example = "1")
-  private long userid;
+  private String userid;
   @Schema(description = "위도", example = "37.321908")
   private double latitude;
   @Schema(description = "경도", example = "127.124")

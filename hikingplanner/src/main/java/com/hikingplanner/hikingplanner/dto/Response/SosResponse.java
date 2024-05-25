@@ -12,7 +12,8 @@ import lombok.ToString;
 @Getter
 @Setter
 public class SosResponse {
-  private long userid;
+  private String username;
+  private String phone_number;
   private double latitude;
   private double longitude;
   private String nationalposnum;
