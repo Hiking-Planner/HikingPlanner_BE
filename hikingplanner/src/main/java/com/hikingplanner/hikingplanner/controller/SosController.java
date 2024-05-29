@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,9 +45,18 @@ public class SosController {
     @Autowired
     private UserRepository userRepository;
 
-    public SosController() {
+    private String sosto;
+    private String sosfrom;
+
+    @Autowired
+    public SosController(@Value("${nurigo.api.key}") String apiKey,
+                        @Value("${nurigo.api.secret}") String apiSecret,
+                        @Value("${sos.number}") String sosnumber,
+                        @Value("${nurigo.api.allownumber}") String allownumber) {
       // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-      this.messageService = NurigoApp.INSTANCE.initialize("NCS9XFYLWTDGMKOV", "ULOBPEFXUBLOCIUYTACH5ZWPQ1UTDUTB", "https://api.coolsms.co.kr");
+      this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret, "https://api.coolsms.co.kr");
+      this.sosto = sosnumber;
+      this.sosfrom = allownumber;                     
   }
     @PostMapping("/sos")
     @Operation(summary = "긴급신고", description = "사용자 id와 현재위치(위도,경도), 시간을 POST하면 국가지점번호를 추가하여 반환한다.")
@@ -84,8 +94,8 @@ public class SosController {
         신고시각 : %s \n
         *본 문자는 하이킹플래너 어플에서 발송된 긴급신고입니다.
          """,request.getUsername(),request.getPhone_number(),request.getNationalposnum(),formattedTime);
-        message.setFrom("01057796719");
-        message.setTo("01042254189");
+        message.setFrom(sosfrom);
+        message.setTo(sosto);
         message.setText(messsageform);
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
