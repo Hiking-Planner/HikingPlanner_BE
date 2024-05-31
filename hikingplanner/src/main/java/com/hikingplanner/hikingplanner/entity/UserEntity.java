@@ -49,5 +49,10 @@ public class UserEntity {
         this.type = type;
         this.role = "ROLE_USER";
     }
+
+    public static Object builder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    }
     
 }

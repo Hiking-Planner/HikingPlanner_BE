@@ -1,10 +1,14 @@
 package com.hikingplanner.hikingplanner.service.implement;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.ResponseEntity;
+
+
+
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import com.hikingplanner.hikingplanner.common.CertificationNumber;
 import com.hikingplanner.hikingplanner.dto.Request.auth.CheckCertificationRequestDto;
@@ -26,7 +30,9 @@ import com.hikingplanner.hikingplanner.repository.CertificationRepository;
 import com.hikingplanner.hikingplanner.repository.UserRepository;
 import com.hikingplanner.hikingplanner.service.AuthService;
 
+
 import lombok.RequiredArgsConstructor;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +44,12 @@ public class AuthServiceImplement implements AuthService{
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final JwtProvider jwtProvider;
+
+    private static final String KAKAO_CLIENT_ID = "390ea7f47eb618a6f36ad2b5448b8aed";
+    private static final String KAKAO_CLIENT_SECRET = "Qi9ElM0lTgl7Iy5hA4w2FbiqS1H0lTku"; // 마찬가지로 하드코딩된 값
+    private static final String KAKAO_REDIRECT_URI = "http://localhost:3000/login/oauth2/callback/kakao";
+    private static final String KAKAO_TOKEN_URI = "https://kauth.kakao.com/oauth/token";
+    private static final String KAKAO_USER_INFO_URI = "https://kapi.kakao.com/v2/user/me";
     
     @Override
     public ResponseEntity<? super IdCheckResponseDto> idCheck(IdCheckRequestDto dto) {
@@ -149,8 +161,10 @@ public class AuthServiceImplement implements AuthService{
         }
         return SignInResponseDto.success(token);
     }
-    
-    
    
-    
+
+
+
 }
+
+

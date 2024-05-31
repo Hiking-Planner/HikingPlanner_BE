@@ -31,6 +31,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
                 String userId = oAuth2User.getName();
                 String token = jwtProvider.create(userId);
 
-                response.sendRedirect("http://ec2-3-143-125-20.us-east-2.compute.amazonaws.com:8080/auth/oauth-response/" +token+ "/3600");
+                response.sendRedirect("http://localhost:3000/auth/oauth-response/" +token+ "/3600");
 	}
 }
