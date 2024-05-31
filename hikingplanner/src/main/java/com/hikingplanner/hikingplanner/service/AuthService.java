@@ -13,6 +13,7 @@ import com.hikingplanner.hikingplanner.dto.Response.auth.EmailCertificationRespo
 import com.hikingplanner.hikingplanner.dto.Response.auth.IdCheckResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignInResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignUpResponseDto;
+import com.hikingplanner.hikingplanner.service.implement.LoginResponseDto;
 
 
 
@@ -27,8 +28,10 @@ public interface AuthService {
     ResponseEntity<? super EmailCertificationResponseDto> emailCertification(EmailCertificationRequestDto dto);
     ResponseEntity<? super CheckCertificationResponseDto> checkCertification(CheckCertificationRequestDto dto);
     ResponseEntity<? super SignInResponseDto> signIn (SignInRequestDto dto);
-    
 
+    // 카카오 로그인 관련 메서드 추가
+    String getKakaoAccessToken(String code);
+    ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken);
     
 
 

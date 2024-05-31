@@ -8,11 +8,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor //지정하는 필드에 대해서 모든 셍성자 
 @Entity(name="user")
 @Table(name="user")
@@ -50,9 +52,5 @@ public class UserEntity {
         this.role = "ROLE_USER";
     }
 
-    public static Object builder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'builder'");
-    }
     
 }
