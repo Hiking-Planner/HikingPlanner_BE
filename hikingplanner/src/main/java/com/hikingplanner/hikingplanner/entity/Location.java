@@ -6,9 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="locations")
+@Getter
+@Setter
 public class Location {
     
     @Id
@@ -23,17 +27,7 @@ public class Location {
 
     private long timestamp;
 
-    public void setUserid(String userid) {
-        this.userid=userid;
-    }
 
-    public void setLocationData(String locationData) {
-        this.locationData=locationData;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
 
 }
 

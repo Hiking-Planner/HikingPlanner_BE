@@ -36,7 +36,9 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         String profile_image = null;
 
         if (oauthClientName.equals("kakao")) {
+            @SuppressWarnings("unchecked")
             Map<String, Object> kakaoAccount = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+            @SuppressWarnings("unchecked")
             Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
             
             userId = "kakao_" + oAuth2User.getAttributes().get("id");

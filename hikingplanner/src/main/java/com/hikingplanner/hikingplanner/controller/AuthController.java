@@ -3,15 +3,13 @@ package com.hikingplanner.hikingplanner.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
 
 import com.hikingplanner.hikingplanner.dto.Request.auth.CheckCertificationRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.EmailCertificationRequestDto;
@@ -31,10 +29,6 @@ import jakarta.servlet.http.HttpServletRequest;
 //import io.jsonwebtoken.io.IOException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 
 
 
@@ -88,8 +82,6 @@ public class AuthController {
         return response;
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/login/oauth2/callback/kakao")
     public ResponseEntity<LoginResponseDto> kakaoLogin(HttpServletRequest request) {
     String code = request.getParameter("code");
@@ -98,6 +90,5 @@ public class AuthController {
     }
    
     
->>>>>>> origin/main
 }
 
