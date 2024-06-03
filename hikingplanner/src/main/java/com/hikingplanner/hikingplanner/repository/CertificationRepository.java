@@ -7,7 +7,6 @@ import com.hikingplanner.hikingplanner.entity.CertificationEntity;
 
 import jakarta.transaction.Transactional;
 
-import java.util.List;
 
 
 @Repository
