@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 public class SignInResponseDto extends ResponseDto{
 
+    private boolean success;
     private String token;
     private int expirationTime;
 
@@ -19,6 +20,7 @@ public class SignInResponseDto extends ResponseDto{
         super();
         this.token = token;
         this.expirationTime=3600;
+        this.success = true;
     }
     public static ResponseEntity<SignInResponseDto> success(String token) {
         SignInResponseDto responseBody = new SignInResponseDto(token);

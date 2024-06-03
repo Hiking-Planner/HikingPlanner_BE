@@ -57,6 +57,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll()
                 .requestMatchers("/api/v1/user/**").hasRole("USER")
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2->oauth2
