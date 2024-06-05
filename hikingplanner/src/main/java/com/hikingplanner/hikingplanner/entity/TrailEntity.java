@@ -1,8 +1,8 @@
 package com.hikingplanner.hikingplanner.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -22,7 +22,7 @@ import lombok.ToString;
 @Table(name="trail")
 public class TrailEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //@GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long trail_id;
   
   @ManyToOne
@@ -42,6 +42,15 @@ public class TrailEntity {
 
   public Long getMountainId() {
     return mountain.getMtid();
-}
+  }
+  public TrailEntity(Long trail_id, Mountain mountain, String trail_name, String trail_comment, String start_point, String end_point, String traildata) {
+    this.trail_id = trail_id;
+    this.mountain = mountain;
+    this.trail_name = trail_name;
+    this.trail_comment = trail_comment;
+    this.start_point = start_point;
+    this.end_point = end_point;
+    this.traildata = traildata;
+  }
 
 }

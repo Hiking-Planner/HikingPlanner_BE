@@ -48,6 +48,7 @@ public class SosController {
     private String sosto;
     private String sosfrom;
 
+    //Autowired 안쓰면 에러남
     @Autowired
     public SosController(@Value("${nurigo.api.key}") String apiKey,
                         @Value("${nurigo.api.secret}") String apiSecret,
@@ -82,6 +83,7 @@ public class SosController {
     }
 
     @PostMapping("/sendsosmessage")
+    @Operation(summary = "긴급신고문자전송", description = "api 요청 시 긴급센터로 위급상황임을 알리는 신고문자를 전송")
     public SingleMessageSentResponse SosMessage(@RequestBody SosMessageRequest request) {
         Message message = new Message();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

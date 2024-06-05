@@ -19,7 +19,7 @@ public class SosRequest {
   private double latitude;
   @Schema(description = "경도", example = "127.124")
   private double longitude;
-  @Schema(description = "date", example = "2024-05-16T00:32:00Z")
+  @Schema(description = "datetime", example = "2024-05-16T00:32:00Z")
   private LocalDateTime date;
 
 }

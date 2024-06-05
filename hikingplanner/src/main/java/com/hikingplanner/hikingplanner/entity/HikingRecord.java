@@ -10,24 +10,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="locations")
+@Table(name="hiking_record")
 @Getter
 @Setter
-public class Location {
+public class HikingRecord {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long locationid;
+    @Column(name = "record_id")
+    private Long recordid;
 
     @Column(name="userid")
     private String userid;
 
-    @Column(name = "location_data")
-    private String locationData;
+    @Column(name="mountain_id")
+    private Long mtid;
 
-    private long timestamp;
+    @Column(name = "hiking_trail_data")
+    private String hikingTrailData;
 
-
+    private Long savetime;
 
 }
 
