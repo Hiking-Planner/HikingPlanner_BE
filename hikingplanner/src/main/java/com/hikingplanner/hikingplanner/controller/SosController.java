@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hikingplanner.hikingplanner.dto.Request.SosMessageRequest;
-import com.hikingplanner.hikingplanner.dto.Request.SosRequest;
-import com.hikingplanner.hikingplanner.dto.Response.SosResponse;
+import com.hikingplanner.hikingplanner.dto.Request.sos.SosMessageRequest;
+import com.hikingplanner.hikingplanner.dto.Request.sos.SosRequest;
+import com.hikingplanner.hikingplanner.dto.Response.sos.SosResponse;
 import com.hikingplanner.hikingplanner.entity.UserEntity;
 import com.hikingplanner.hikingplanner.repository.UserRepository;
 import com.hikingplanner.hikingplanner.service.GetNationalPointNumberService;

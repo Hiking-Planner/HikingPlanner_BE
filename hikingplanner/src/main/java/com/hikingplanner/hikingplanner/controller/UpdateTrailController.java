@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hikingplanner.hikingplanner.dto.Request.trail.ChangeRecordDto;
-import com.hikingplanner.hikingplanner.dto.Response.UpdateTrailResponse;
+import com.hikingplanner.hikingplanner.dto.Response.trail.UpdateTrailResponse;
 import com.hikingplanner.hikingplanner.entity.Mountain;
 import com.hikingplanner.hikingplanner.entity.TrailEntity;
 import com.hikingplanner.hikingplanner.repository.MountainRepository;
@@ -27,6 +27,7 @@ import com.hikingplanner.hikingplanner.repository.TrailRepository;
 import com.hikingplanner.hikingplanner.service.UpdateTrailService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -35,6 +36,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name="많이 간 경로 추가(업데이트) API")
 public class UpdateTrailController {
   private static final Logger logger = LoggerFactory.getLogger(UpdateTrailController.class);
 

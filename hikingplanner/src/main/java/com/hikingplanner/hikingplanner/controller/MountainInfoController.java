@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hikingplanner.hikingplanner.dto.MountainDto;
+import com.hikingplanner.hikingplanner.dto.Response.mountain.MountainDto;
 import com.hikingplanner.hikingplanner.entity.Mountain;
 import com.hikingplanner.hikingplanner.repository.MountainRepository;
 import com.hikingplanner.hikingplanner.service.MtInfoService;

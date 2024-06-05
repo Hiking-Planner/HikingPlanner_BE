@@ -1,4 +1,4 @@
-package com.hikingplanner.hikingplanner.dto.Request;
+package com.hikingplanner.hikingplanner.dto.Request.sos;
 
 import java.time.LocalDateTime;
 

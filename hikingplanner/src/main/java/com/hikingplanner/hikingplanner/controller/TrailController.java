@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hikingplanner.hikingplanner.dto.TrailDataDto;
-import com.hikingplanner.hikingplanner.dto.TrailInfoDto;
+import com.hikingplanner.hikingplanner.dto.Response.trail.TrailDataDto;
+import com.hikingplanner.hikingplanner.dto.Response.trail.TrailInfoDto;
 import com.hikingplanner.hikingplanner.entity.TrailEntity;
 import com.hikingplanner.hikingplanner.repository.TrailRepository;
 import com.hikingplanner.hikingplanner.service.MtInfoService;

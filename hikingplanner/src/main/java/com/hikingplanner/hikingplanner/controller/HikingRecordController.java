@@ -12,11 +12,13 @@ import com.hikingplanner.hikingplanner.entity.HikingRecord;
 import com.hikingplanner.hikingplanner.repository.HikingRecordRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name="등산기록 DB 저장API")
 public class HikingRecordController {
 
     @Autowired

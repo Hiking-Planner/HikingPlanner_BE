@@ -1,4 +1,4 @@
-package com.hikingplanner.hikingplanner.dto.Response;
+package com.hikingplanner.hikingplanner.dto.Response.trail;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

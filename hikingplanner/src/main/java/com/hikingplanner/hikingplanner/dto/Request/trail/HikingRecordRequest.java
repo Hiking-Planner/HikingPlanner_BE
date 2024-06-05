@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class HikingRecordRequest {
-  @Schema(description = "recordid", example = "1")
+  @Schema(description = "recordid", example = "unnessasary")
   private Long recordid;
   @Schema(description = "userid", example = "1")
   private String userid;

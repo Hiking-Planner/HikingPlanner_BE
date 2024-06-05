@@ -1,4 +1,5 @@
-package com.hikingplanner.hikingplanner.dto;
+package com.hikingplanner.hikingplanner.dto.Response.trail;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MountainImgDto {
-  private Long mtimg_id;
-  private String img_url;
-  private String img_name;
+public class TrailDataDto {
+  private String TrailData;
 
 }

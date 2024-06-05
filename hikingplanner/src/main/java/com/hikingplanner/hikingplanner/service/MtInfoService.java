@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.hikingplanner.hikingplanner.dto.MountainDto;
-import com.hikingplanner.hikingplanner.dto.MountainImgDto;
-import com.hikingplanner.hikingplanner.dto.TrailInfoDto;
+import com.hikingplanner.hikingplanner.dto.Response.mountain.MountainDto;
+import com.hikingplanner.hikingplanner.dto.Response.mountain.MountainImgDto;
+import com.hikingplanner.hikingplanner.dto.Response.trail.TrailInfoDto;
 import com.hikingplanner.hikingplanner.entity.Mountain;
 import com.hikingplanner.hikingplanner.entity.MountainImgEntity;
 import com.hikingplanner.hikingplanner.entity.TrailEntity;
