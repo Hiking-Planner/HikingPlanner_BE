@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import jakarta.persistence.Column;
 
 @Setter
 @AllArgsConstructor
@@ -23,6 +24,7 @@ import lombok.ToString;
 public class TrailEntity {
   @Id
   //@GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="trail_id")
   private Long trail_id;
   
   @ManyToOne

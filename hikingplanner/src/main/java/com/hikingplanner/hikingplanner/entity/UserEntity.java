@@ -25,8 +25,10 @@ public class UserEntity {
     private String password;
     private String email;
     private String nickname;
+
     @Column(name="phone_number")
     private String phoneNumber;
+
     private String address;
     private String address_detail;
     private String profile_image;
