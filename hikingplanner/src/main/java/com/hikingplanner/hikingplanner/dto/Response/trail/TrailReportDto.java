@@ -12,7 +12,7 @@ public class TrailReportDto {
     private String latitude;
     private String longitude;
     private String trail_image;
-    private Instant timestamp;
+    private String timestamp;
     public String getReport() {
         return report;
         
@@ -26,8 +26,12 @@ public class TrailReportDto {
     public String getTrail_image() {
         return trail_image;
     }
-    public Instant getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
-    
+
+    public void setTrail_image(String trail_image) {
+        this.trail_image = trail_image;
+    }
+
 }

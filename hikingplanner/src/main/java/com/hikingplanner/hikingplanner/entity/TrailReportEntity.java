@@ -32,7 +32,7 @@ public class TrailReportEntity {
     private String trail_image;
 
     @Column(name="TIMESTAMP")
-    private Instant timestamp;
+    private String timestamp;
 
 
 
