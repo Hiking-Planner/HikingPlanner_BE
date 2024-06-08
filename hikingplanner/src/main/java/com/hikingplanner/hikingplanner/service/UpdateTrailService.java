@@ -37,6 +37,13 @@ public class UpdateTrailService {
     //2. ChangeRecordDto로 userid와 경로데이터를 가져온다. 이때 경로데이터를 string에서 latitude, longitude, timestamp를 가진 데이터로 형변환한다.
     List<ChangeRecordDto> recordDtoList = new ArrayList<>();
     for(HikingRecord hikingRecord : hikingRecords){
+
+      // hiking_trail_data가 빈 배열인지 확인
+      if (isHikingTrailDataEmpty(hikingRecord)) {
+        // 빈 배열인 경우, 해당 레코드를 삭제하고 건너뛰기
+        hikingRecordRepository.delete(hikingRecord);
+        continue;
+      }
       ChangeRecordDto changeRecordDto = getRecord(hikingRecord);
       recordDtoList.add(changeRecordDto);
     }
@@ -45,6 +52,16 @@ public class UpdateTrailService {
     return recordDtoList;
     
 
+  }
+
+  private boolean isHikingTrailDataEmpty(HikingRecord hikingRecord) throws JsonProcessingException {
+    String hikingTrailData = hikingRecord.getHikingTrailData();
+    if (hikingTrailData == null || hikingTrailData.trim().isEmpty()) {
+      return true;
+    }
+
+    // JSON 배열이 빈 배열인지 확인
+    return hikingTrailData.trim().equals("[]");
   }
 
   public ChangeRecordDto getRecord(HikingRecord hikingRecord) throws JsonMappingException, JsonProcessingException{

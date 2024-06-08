@@ -29,39 +29,38 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "trail_report API")
 public class TrailReportController {
     
-    @Autowired
-    private TrailReportService trailReportService;
-    private final S3ImageService s3ImageService; // S3 이미지 서비스 추가
+  @Autowired
+  private TrailReportService trailReportService;
+  private final S3ImageService s3ImageService; // S3 이미지 서비스 추가
 
 
 
 
-    @PostMapping("/trailReport")
-public ResponseEntity<?> createTrailReport(
-        @RequestParam("trailReport") String trailReportJson,
-        @RequestParam("image") MultipartFile image) {
-    try {
-        ObjectMapper objectMapper = new ObjectMapper();
-        TrailReportDto trailReportDto = objectMapper.readValue(trailReportJson, TrailReportDto.class);
+  @PostMapping("/trailReport")
+  public ResponseEntity<?> createTrailReport(
+          @RequestParam("trailReport") String trailReportJson,
+          @RequestParam("image") MultipartFile image) {
+      try {
+          ObjectMapper objectMapper = new ObjectMapper();
+          TrailReportDto trailReportDto = objectMapper.readValue(trailReportJson, TrailReportDto.class);
 
-        if (!image.isEmpty()) {
-            String imageUrl = s3ImageService.upload(image);
-            trailReportDto.setTrail_image(imageUrl);
-        }
+          if (!image.isEmpty()) {
+              String imageUrl = s3ImageService.upload(image);
+              trailReportDto.setTrail_image(imageUrl);
+          }
 
-        TrailReportEntity trailReportEntity = trailReportService.createTrailReport(trailReportDto);
-        return ResponseEntity.ok(trailReportEntity);
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().body("Error parsing request: " + e.getMessage());
-    }
-}
+          TrailReportEntity trailReportEntity = trailReportService.createTrailReport(trailReportDto);
+          return ResponseEntity.ok(trailReportEntity);
+      } catch (Exception e) {
+          return ResponseEntity.badRequest().body("Error parsing request: " + e.getMessage());
+      }
+  }
 
-    @GetMapping("/trailReport/{report_id}")
-    public ResponseEntity<TrailReportEntity> getTrailReportById(@PathVariable int report_id){
-        return trailReportService.getTrailReportById(report_id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
-    }
-   
+  @GetMapping("/trailReport/{report_id}")
+  public ResponseEntity<TrailReportEntity> getTrailReportById(@PathVariable int report_id){
+      return trailReportService.getTrailReportById(report_id)
+          .map(ResponseEntity::ok)
+          .orElse(ResponseEntity.notFound().build());
+  }
 
 }
