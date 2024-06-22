@@ -149,4 +149,5 @@ public class GetNationalPointNumberService {
 
    파이썬 서버로 DB의 각 산 별 유저들의 등산기록을 전송하고, 파이썬서버에서 도출한 경로정보를 DB에 저장한다.
    만약 기존에 '유저들이 많이 간 경로'가 DB에 없다면 새로 생성하고, 있다면 경로 정보를 수정한다.
+   
    <a href="https://github.com/Hiking-Planner/PythonClusteringSever"> 경로 클러스터링 서버 readme 바로가기 </a>
