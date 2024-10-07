@@ -35,7 +35,7 @@ public class JwtProvider {
 
     }
 
-    public String valdiate (String jwt) {
+    public String validate (String jwt) {
         String subject = null;
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 

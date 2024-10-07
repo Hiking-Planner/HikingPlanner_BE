@@ -157,28 +157,36 @@ public class AuthServiceImplement implements AuthService{
     }
 
     @Override
-    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
-        String token = null;
+public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+    String token = null;
 
-        try {
+    try {
+        String userId = dto.getId();
 
-            String userId = dto.getId();
-            UserEntity userEntity = userRepository.findByUserId(userId);
-            if(userEntity == null) SignInResponseDto.signInFail();
+        // Optional로 유저 정보를 가져오고 처리
+        UserEntity userEntity = userRepository.findByUserId(userId)
+            .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-            String password = dto.getPassword();
-            String encodedPassword = userEntity.getPassword();
-            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
-            if(!isMatched) return SignInResponseDto.signInFail();
+        String password = dto.getPassword();
+        String encodedPassword = userEntity.getPassword();
 
-            token = jwtProvider.create(userId);
-            
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.dataseError();
+        // 비밀번호 검증
+        boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+        if (!isMatched) {
+            return SignInResponseDto.signInFail();  // 비밀번호 불일치
         }
-        return SignInResponseDto.success(token);
+
+        // JWT 토큰 생성
+        token = jwtProvider.create(userId);
+
+    } catch (Exception exception) {
+        exception.printStackTrace();
+        return ResponseDto.dataseError();  // 데이터베이스 에러 처리
     }
+
+    return SignInResponseDto.success(token);  // 성공 시 토큰 반환
+}
+
    
     @Transactional
     public String getKakaoAccessToken(String code) {

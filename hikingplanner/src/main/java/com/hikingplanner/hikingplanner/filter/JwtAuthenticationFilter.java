@@ -27,58 +27,72 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter{ //추상클래스 확장
-    
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
     @Override
-    protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-            try {
-                String token = parseBearerToken(request);
-                if(token == null) {
-                    filterChain.doFilter(request, response);
-                    return;
-                }
-
-                String userId = jwtProvider.valdiate(token);
-                if(userId==null) {
-                    filterChain.doFilter(request, response);
-                    return;
-                }
-
-                UserEntity userEntity = userRepository.findByUserId(userId);
-                String role = userEntity.getRole(); //role:ROLE_USER, ROLE_ADMIN
-
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(role));
-
-                SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-                AbstractAuthenticationToken authenticationToken = 
-                    new UsernamePasswordAuthenticationToken(userId, null, authorities);
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                
-                securityContext.setAuthentication(authenticationToken);
-                SecurityContextHolder.setContext(securityContext);
-            }catch(Exception exception){
-                exception.printStackTrace();
+        try {
+            // JWT 토큰을 파싱하여 가져옴
+            String token = parseBearerToken(request);
+            if (token == null) {
+                filterChain.doFilter(request, response);
+                return;
             }
-            filterChain.doFilter(request, response);
 
+            // JWT 토큰을 검증하여 userId 추출
+            String userId = jwtProvider.validate(token);  // validate 메서드 오타 수정
+            if (userId == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
 
+            // 유저 정보를 데이터베이스에서 조회
+            UserEntity userEntity = userRepository.findByUserId(userId)
+                    .orElse(null);
+            if (userEntity == null) {
+                filterChain.doFilter(request, response); // 유저를 찾지 못하면 필터 체인을 계속 실행
+                return;
+            }
+
+            // 유저의 역할(Role)을 가져옴
+            String role = "ROLE_" + userEntity.getRole(); // ROLE_USER 또는 ROLE_ADMIN 등
+
+            // Spring Security 인증 객체 생성 및 설정
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(role));
+
+            AbstractAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userEntity.getEmail(), null, authorities);
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+            securityContext.setAuthentication(authenticationToken);
+            SecurityContextHolder.setContext(securityContext);
+
+        } catch (Exception exception) {
+            // 예외 발생 시 로그를 남기고 401 상태 코드 반환
+            logger.error("JWT 인증 실패: ", exception);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT Token");
+            return;
+        }
+
+        // 필터 체인을 계속 실행
+        filterChain.doFilter(request, response);
     }
-    private String parseBearerToken(HttpServletRequest request){
+
+    // Bearer 토큰을 파싱하는 메서드
+    private String parseBearerToken(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
-
-        boolean hasAuthorization = StringUtils.hasText(authorization);
-        if(!hasAuthorization) return null;
-
-        boolean isBearer = authorization.startsWith("Bearer ");
-        if(!isBearer) return null;
-
-        String token = authorization.substring(7);
-        return token;
-    } // 이 행위는 리퀘스트 객체로부터 jwt토큰값을 가져오는 행위임
+        if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer ")) {
+            return authorization.substring(7);
+        }
+        return null;
+    }
 }
+
+
