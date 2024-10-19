@@ -2,6 +2,8 @@ package com.hikingplanner.hikingplanner.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,5 +42,6 @@ public class CommentEntity {
 
     @ManyToOne
     @JoinColumn(name = "board_id", nullable = false)
+    @JsonBackReference
     private BoardEntity board;
 }

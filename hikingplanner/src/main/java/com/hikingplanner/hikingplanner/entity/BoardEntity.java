@@ -3,6 +3,8 @@ package com.hikingplanner.hikingplanner.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,5 +61,12 @@ public class BoardEntity {
     
     // 댓글과의 관계 설정
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<CommentEntity> comments;
+
+    public void addComment(CommentEntity comment) {
+        comments.add(comment);
+        comment.setBoard(this);
+        this.commentCount += 1;  // 댓글 수 증가
+    }
 }
