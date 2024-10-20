@@ -2,6 +2,8 @@ package com.hikingplanner.hikingplanner.service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hikingplanner.hikingplanner.entity.BoardEntity;
@@ -31,5 +33,11 @@ public class BoardService {
 
         // 데이터베이스에 게시물 저장
         return boardRepository.save(board);
+    }
+
+    // 단일 게시물 조회
+    public BoardEntity findBoardById(Long boardId) {
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("Board not found with id: " + boardId));
     }
 }
