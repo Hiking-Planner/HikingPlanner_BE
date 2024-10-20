@@ -1,10 +1,11 @@
 package com.hikingplanner.hikingplanner.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hikingplanner.hikingplanner.entity.BoardEntity;
 import com.hikingplanner.hikingplanner.entity.UserEntity;
@@ -13,25 +14,26 @@ import com.hikingplanner.hikingplanner.repository.BoardRepository;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final S3ImageService s3ImageService;
 
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository, S3ImageService s3ImageService) {
         this.boardRepository = boardRepository;
+        this.s3ImageService = s3ImageService;
     }
 
-    public BoardEntity createBoard(String title, String content, UserEntity user, String mountainName) {
-        // 새로운 게시물 엔티티 생성
+    public BoardEntity createBoard(String title, String content, UserEntity user, String mountainName, String imageUrl) {
         BoardEntity board = BoardEntity.builder()
             .title(title)
             .content(content)
             .user(user)
             .mountainName(mountainName)
-            .writeDatetime(LocalDateTime.now())  // 현재 시간으로 작성 시간 설정
-            .favoriteCount(0)  // 기본 값 설정
-            .commentCount(0)   // 기본 값 설정
-            .viewCount(0)      // 기본 값 설정
+            .imageUrl(imageUrl)  // 이미지 URL 저장
+            .writeDatetime(LocalDateTime.now())
+            .favoriteCount(0)
+            .commentCount(0)
+            .viewCount(0)
             .build();
 
-        // 데이터베이스에 게시물 저장
         return boardRepository.save(board);
     }
 
@@ -39,5 +41,23 @@ public class BoardService {
     public BoardEntity findBoardById(Long boardId) {
         return boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("Board not found with id: " + boardId));
+    }
+
+    // 게시물 전체 조회
+    public List<BoardEntity> getAllBoards() {
+        return boardRepository.findAll();
+    }
+
+    public void deleteBoard(Long boardId) {
+        BoardEntity board = boardRepository.findById(boardId)
+            .orElseThrow(() -> new IllegalArgumentException("Board not found with id: " + boardId));
+
+        // 게시물에 이미지가 있는 경우 S3에서 이미지 삭제
+        if (board.getImageUrl() != null) {
+            s3ImageService.deleteImageFromS3(board.getImageUrl());
+        }
+
+        // 게시물 삭제
+        boardRepository.delete(board);
     }
 }

@@ -78,4 +78,17 @@ public class CommentService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    // 댓글 삭제 로직
+    public void deleteComment(Long commentId, String email) {
+        CommentEntity comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new IllegalArgumentException("Comment not found"));
+
+        // 댓글 작성자와 현재 인증된 사용자가 같은지 확인
+        if (!comment.getUser().getEmail().equals(email)) {
+            throw new IllegalArgumentException("You are not the owner of this comment");
+        }
+
+        commentRepository.delete(comment);
+    }
 }

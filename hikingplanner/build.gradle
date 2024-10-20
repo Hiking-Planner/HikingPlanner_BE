@@ -37,8 +37,8 @@ dependencies {
 	implementation group:'io.jsonwebtoken', name:'jjwt-jackson', version:'0.11.2'
   implementation 'org.locationtech.proj4j:proj4j:1.2.2'
   implementation 'org.locationtech.proj4j:proj4j-epsg:1.2.2'
-//   implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-//   implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws', version: '2.4.4'
+  implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+  implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws', version: '2.4.4'
   
   // swagger
   implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.1.0'

@@ -58,6 +58,9 @@ public class BoardEntity {
 
     @Column(name = "mountain_name")
     private String mountainName;
+
+    @Column(name = "image_url")
+    private String imageUrl;  // 이미지 URL 저장
     
     // 댓글과의 관계 설정
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

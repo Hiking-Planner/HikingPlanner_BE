@@ -9,7 +9,7 @@ import com.hikingplanner.hikingplanner.entity.CommentEntity;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Long>{
     List<CommentEntity> findAllByBoard(BoardEntity board);
-    
+    // List<CommentEntity> findByUserId(String userId);
 
     
 }
