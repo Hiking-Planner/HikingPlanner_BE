@@ -82,12 +82,12 @@ public class AuthController {
         return response;
     }
 
-    @GetMapping("/login/oauth2/callback/kakao")
-    public ResponseEntity<LoginResponseDto> kakaoLogin(HttpServletRequest request) {
-    String code = request.getParameter("code");
-    String kakaoAccessToken = authService.getKakaoAccessToken(code);
-    return authService.kakaoLogin(kakaoAccessToken);
-    }
+    // @GetMapping("/login/oauth2/callback/kakao")
+    // public ResponseEntity<LoginResponseDto> kakaoLogin(HttpServletRequest request) {
+    // String code = request.getParameter("code");
+    // String kakaoAccessToken = authService.getKakaoAccessToken(code);
+    // return authService.kakaoLogin(kakaoAccessToken);
+    // }
    
     
 }

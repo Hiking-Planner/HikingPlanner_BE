@@ -20,10 +20,10 @@ public class ResponseDto {
         this.code = ResponseCode.SUCCESS;
         this.message = ResponseMessage.SUCCESS;
     }
-    public static ResponseEntity<ResponseDto> dataseError() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
-    }
+    // public static ResponseEntity<ResponseDto> dataseError() {
+    //     ResponseDto responseBody = new ResponseDto(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR);
+    //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
+    // }
     public static ResponseEntity<ResponseDto> validationFail() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.VALADATION_FAIL, ResponseMessage.VALADATION_FAIL);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
