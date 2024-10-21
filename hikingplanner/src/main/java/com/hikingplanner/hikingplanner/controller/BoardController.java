@@ -66,13 +66,14 @@ public class BoardController {
     }
 
     // 단일 게시물 조회
-    @GetMapping("boards/{boardId}")
+    @GetMapping("boards/{boardId}") //프론트에서 쓸일이 있을까 싶음
     public ResponseEntity<BoardEntity> getBoardById(@PathVariable("boardId") Long boardId) {
     BoardEntity board = boardService.findBoardById(boardId);
     return ResponseEntity.ok(board);
     }
 
     // 게시물 전체 조회
+    @Operation(summary = "게시물 전체 조회 API")
     @GetMapping("boards")
     public ResponseEntity<List<BoardEntity>> getAllBoards() {
         List<BoardEntity> boards = boardService.getAllBoards();
