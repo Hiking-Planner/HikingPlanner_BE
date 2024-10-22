@@ -1,10 +1,13 @@
 package com.hikingplanner.hikingplanner.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hikingplanner.hikingplanner.dto.Request.user.UserUpdateRequestDto;
 import com.hikingplanner.hikingplanner.entity.UserEntity;
+import com.hikingplanner.hikingplanner.service.S3ImageService;
 import com.hikingplanner.hikingplanner.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "마이페이지 API")
 public class UserController {
     private final UserService userService;
+    private final S3ImageService s3ImageService;
 
     //이메일로 조회
     @Operation(summary = "이메일로 유저정보 조회 API")
@@ -68,6 +72,22 @@ public class UserController {
         //사용자 정보를 업데이트
         UserEntity updateUser = userService.updateUser(email, dto);
         return ResponseEntity.ok(updateUser);
+    }
+
+    // 프로필 이미지 업데이트 API
+    @Operation(summary = "현재 로그인한 사용자의 프로필 이미지 수정 API")
+    @PutMapping("/profile/image")
+    public ResponseEntity<UserEntity> updateUserProfileImage(@RequestParam("file") MultipartFile file) {
+        // 인증된 사용자 정보를 JWT 토큰에서 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        // 이미지 업로드 처리
+        String imageUrl = s3ImageService.upload(file);
+
+        
+        UserEntity updatedUser = userService.updateProfileImage(email, imageUrl);
+        return ResponseEntity.ok(updatedUser);
     }
 
 }

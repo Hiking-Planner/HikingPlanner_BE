@@ -60,4 +60,9 @@ public class BoardService {
         // 게시물 삭제
         boardRepository.delete(board);
     }
+
+    // userId로 게시물 조회
+    public List<BoardEntity> getBoardsByUserId(String userId) {
+        return boardRepository.findByUserUserId(userId);
+    }
 }

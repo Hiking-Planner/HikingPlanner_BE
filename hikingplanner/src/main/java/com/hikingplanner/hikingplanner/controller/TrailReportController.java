@@ -19,6 +19,7 @@ import com.hikingplanner.hikingplanner.entity.TrailReportEntity;
 import com.hikingplanner.hikingplanner.service.S3ImageService;
 import com.hikingplanner.hikingplanner.service.TrailReportService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@Tag(name = "trail_report API")
+@Tag(name = "등산 중 이상한 길 기록 API")
 public class TrailReportController {
     
   @Autowired
@@ -35,7 +36,7 @@ public class TrailReportController {
 
 
 
-
+  @Operation(summary = "이미지와 함께 등산 중 이상한 길 신고 API")
   @PostMapping("/trailReport")
   public ResponseEntity<?> createTrailReport(
           @RequestParam("trailReport") String trailReportJson,

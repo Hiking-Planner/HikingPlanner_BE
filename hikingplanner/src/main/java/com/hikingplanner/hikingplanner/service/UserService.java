@@ -1,5 +1,6 @@
 package com.hikingplanner.hikingplanner.service;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,9 +11,11 @@ import com.hikingplanner.hikingplanner.repository.UserRepository;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final S3ImageService s3ImageService; 
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, S3ImageService s3ImageService) {
         this.userRepository = userRepository;
+        this.s3ImageService = s3ImageService;
     }
 
     // userId로 유저를 찾는 메서드
@@ -50,7 +53,23 @@ public class UserService {
             userEntity.setGender(dto.getGender());
         }
 
-        // 변경된 사용자 정보를 저장
+        
+        return userRepository.save(userEntity);
+    }
+
+
+     // 프로필 이미지 업데이트
+    public UserEntity updateProfileImage(String email, String imageUrl) {
+        UserEntity userEntity = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        // 기존 프로필 이미지가 있으면 삭제
+        if (userEntity.getProfile_image() != null) {
+            s3ImageService.deleteImageFromS3(userEntity.getProfile_image());
+        }
+
+        
+        userEntity.setProfile_image(imageUrl);
         return userRepository.save(userEntity);
     }
 }

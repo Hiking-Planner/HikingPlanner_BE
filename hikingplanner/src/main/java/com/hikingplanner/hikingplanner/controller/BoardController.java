@@ -72,6 +72,15 @@ public class BoardController {
     return ResponseEntity.ok(board);
     }
 
+    @Operation(summary = "특정 사용자가 작성한 게시물 조회 API")
+    @GetMapping("boards/user/{userId}")
+    public ResponseEntity<List<BoardEntity>> getBoardsByUserId(@PathVariable("userId") String userId) {
+    List<BoardEntity> boards = boardService.getBoardsByUserId(userId);
+    return ResponseEntity.ok(boards);
+    }
+
+    
+
     // 게시물 전체 조회
     @Operation(summary = "게시물 전체 조회 API")
     @GetMapping("boards")

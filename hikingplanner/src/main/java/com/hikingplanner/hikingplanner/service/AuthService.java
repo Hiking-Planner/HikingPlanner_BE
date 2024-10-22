@@ -29,9 +29,6 @@ public interface AuthService {
     ResponseEntity<? super CheckCertificationResponseDto> checkCertification(CheckCertificationRequestDto dto);
     ResponseEntity<? super SignInResponseDto> signIn (SignInRequestDto dto);
 
-    // // 카카오 로그인 관련 메서드 추가
-    // String getKakaoAccessToken(String code);
-    // ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken);
     
 
 
