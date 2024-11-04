@@ -13,12 +13,12 @@ public class CommentResponseDto {
     private Long commentId;
     private String content;
     private LocalDateTime writeDatetime;
-    private String userName;
+    private String nickname;
 
     public CommentResponseDto(Long commentId, String content, LocalDateTime writeDatetime, UserEntity user) {
         this.commentId = commentId;
         this.content = content;
         this.writeDatetime = writeDatetime;
-        this.userName = user.getName(); // 사용자 이름 가져오기
+        this.nickname = user.getNickname();
     }
 }

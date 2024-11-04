@@ -41,14 +41,14 @@ public class CommentController {
         return ResponseEntity.ok(response);
     }
 
-    
-    @GetMapping("comments")
-    public ResponseEntity<List<CommentResponseDto>> getComments(@RequestParam Long boardId) {
-
-        // 특정 게시물의 댓글 목록을 조회
-        List<CommentResponseDto> comments = commentService.getCommentsByBoard(boardId);
-        return ResponseEntity.ok(comments);
-    }
+    // 댓글 삭제 API
+    @Operation(summary = "특정게시물 댓글 조회")
+    @GetMapping("/comments")
+    public ResponseEntity<List<CommentResponseDto>> getComments(@RequestParam("boardId") Long boardId) {
+    // 특정 게시물의 댓글 목록을 조회
+    List<CommentResponseDto> comments = commentService.getCommentsByBoard(boardId);
+    return ResponseEntity.ok(comments);
+}
 
      // 댓글 삭제 API
     @Operation(summary = "댓글삭제 API")

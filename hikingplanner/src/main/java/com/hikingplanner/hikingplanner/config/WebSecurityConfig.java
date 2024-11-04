@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+// import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,7 +27,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.hikingplanner.hikingplanner.filter.JwtAuthenticationFilter;
-import com.hikingplanner.hikingplanner.handler.OAuth2SuccessHandler;
+// import com.hikingplanner.hikingplanner.handler.OAuth2SuccessHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,8 +40,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final DefaultOAuth2UserService oAuth2UserService;
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    // private final DefaultOAuth2UserService oAuth2UserService;
+    // private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
@@ -73,12 +73,12 @@ public class WebSecurityConfig {
                 
                 .anyRequest().authenticated()
             )
-            .oauth2Login(oauth2->oauth2
-            .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
-            .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
-            .userInfoEndpoint(endpoint->endpoint.userService(oAuth2UserService))
-            .successHandler(oAuth2SuccessHandler)
-            )
+            // .oauth2Login(oauth2->oauth2
+            // .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
+            // .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+            // .userInfoEndpoint(endpoint->endpoint.userService(oAuth2UserService))
+            // .successHandler(oAuth2SuccessHandler)
+            // )
             .exceptionHandling(exceptionHandling->exceptionHandling
                 .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
             )
