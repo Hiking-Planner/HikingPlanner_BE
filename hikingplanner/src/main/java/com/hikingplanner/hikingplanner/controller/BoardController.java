@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hikingplanner.hikingplanner.dto.Response.BoardResponseDto;
 import com.hikingplanner.hikingplanner.entity.BoardEntity;
 import com.hikingplanner.hikingplanner.entity.UserEntity;
 import com.hikingplanner.hikingplanner.service.BoardService;
@@ -84,10 +85,10 @@ public class BoardController {
     // 게시물 전체 조회
     @Operation(summary = "게시물 전체 조회 API")
     @GetMapping("boards")
-    public ResponseEntity<List<BoardEntity>> getAllBoards() {
-        List<BoardEntity> boards = boardService.getAllBoards();
-        return ResponseEntity.ok(boards);
-    }
+    public ResponseEntity<List<BoardResponseDto>> getAllBoards() {
+    List<BoardResponseDto> boards = boardService.getAllBoards();
+    return ResponseEntity.ok(boards);
+}
 
     @Operation(summary = "게시물 삭제 API")
     @DeleteMapping("/boards/{boardId}")
