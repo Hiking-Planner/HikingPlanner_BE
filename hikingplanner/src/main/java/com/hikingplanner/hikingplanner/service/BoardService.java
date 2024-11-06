@@ -44,7 +44,7 @@ public class BoardService {
     }
 
     public List<BoardResponseDto> getAllBoards() {
-    List<BoardEntity> boards = boardRepository.findAll();
+    List<BoardEntity> boards = boardRepository.findAllByOrderByWriteDatetimeDesc();
     return boards.stream().map(board -> {
         BoardResponseDto dto = new BoardResponseDto();
         dto.setBoardId(board.getBoardId());

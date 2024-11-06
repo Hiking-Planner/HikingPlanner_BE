@@ -22,7 +22,7 @@ import com.hikingplanner.hikingplanner.dto.Response.auth.IdCheckResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignInResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.SignUpResponseDto;
 import com.hikingplanner.hikingplanner.service.AuthService;
-import com.hikingplanner.hikingplanner.service.implement.LoginResponseDto;
+// import com.hikingplanner.hikingplanner.service.implement.LoginResponseDto;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
