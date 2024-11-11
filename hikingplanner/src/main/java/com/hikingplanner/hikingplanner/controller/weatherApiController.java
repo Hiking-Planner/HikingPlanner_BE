@@ -16,6 +16,7 @@ import java.net.URI;
 
 import com.hikingplanner.hikingplanner.entity.Mountain;
 import com.hikingplanner.hikingplanner.repository.MountainRepository;
+import com.hikingplanner.hikingplanner.service.WeatherService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,8 +27,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-//import java.time.LocalDate;
-//import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.StringReader;
@@ -37,11 +36,13 @@ import org.xml.sax.InputSource;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 @Tag(name="날씨 정보 API")
-
 public class weatherApiController {
 
     @Autowired
     private MountainRepository mountainRepository;
+
+    @Autowired
+    private WeatherService weatherService;
 
     @Value("${open.weather.api.key}")
     private String openWeatherApiKey;
@@ -53,7 +54,7 @@ public class weatherApiController {
 
     @GetMapping("/api/weather/{mtid}")
     @Operation(summary="날씨 정보 api",description ="산 ID를 요청파라미터에 담으면 OpenWeatherMap API를 통해 날씨 정보를 불러온다.")
-    public ResponseEntity<String> getWeather(@RequestParam Long mtid) {
+    public ResponseEntity<String> getWeather(@PathVariable Long mtid) {
         Mountain mountain = mountainRepository.findById(mtid).orElse(null);
         if (mountain == null) {
             return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("해당 산 정보를 찾을 수 없습니다.");
@@ -131,4 +132,17 @@ public class weatherApiController {
         }
     }
 
+    @Operation(summary = "옷차림 추천", description = "기온을 요청파라미터에 담으면 출몰정보 API를 통해 일출일몰 정보를 불러온다.")
+    @GetMapping("/clothesrecommend")
+    public ResponseEntity<String> wearRecommend(@Parameter(name="temp", description = "옷차림 정보를 가져올 기온", example="6.7") @RequestParam(value="temp", required= false) Float temp) throws UnsupportedEncodingException {
+        
+        if (temp == null) {
+            return ResponseEntity.badRequest().body("temp 파라미터는 필수입니다.");
+        }
+
+        String wearInfo = weatherService.mountaineeringClothes(temp);
+
+        return ResponseEntity.ok(wearInfo);
     }
+
+}   
