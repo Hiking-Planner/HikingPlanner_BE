@@ -1,7 +1,17 @@
 # HikingPlanner Backend Repository
 
 ## 📌등산로 이상 신고
-<작성해야 함>
+controller > trailReport
+-프론트 보고 수정하겠음
+```
+//Request body 예시
+{
+  "report": "바위 조심.",
+  "latitude": "35.6585",
+  "longitude": "139.7454",
+  "timestamp": "2024-10-20T12:00:00Z"
+}
+```
 
 ## 📌긴급 신고
 controller > SosController
