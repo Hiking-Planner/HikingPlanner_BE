@@ -57,21 +57,11 @@ public class UserEntity {
         this.password=dto.getPassword();
         this.email = dto.getEmail();
         this.phoneNumber=dto.getPhoneNumber();
-        this.nickname = dto.getNickname();  
+        this.nickname = dto.getNickname();
+        this.name = dto.getName();  
         this.type = "app";
         this.role = "ROLE_USER";
     }
-
-    // public UserEntity (String userId, String email,String type, String name, String phoneNumber, String profile_image) {
-    //     this.userId = userId;
-    //     this.password= "Password";
-    //     this.phoneNumber=phoneNumber;
-    //     this.name = name;
-    //     this.email = email;
-    //     this.profile_image=profile_image;
-    //     this.type = type;
-    //     this.role = "ROLE_USER";
-    // }
 
     public enum Gender {
         MALE,

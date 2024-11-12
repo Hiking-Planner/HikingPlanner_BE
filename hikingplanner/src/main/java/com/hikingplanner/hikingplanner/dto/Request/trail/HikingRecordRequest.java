@@ -17,8 +17,8 @@ import lombok.ToString;
 public class HikingRecordRequest {
   @Schema(description = "recordid", example = "unnessasary")
   private Long recordid;
-  @Schema(description = "userid", example = "1")
-  private String userid;
+  // @Schema(description = "userid", example = "1")
+  // private String userid;
   @Schema(description = "mountain_id", example = "1")
   private Long mtid;
   @Schema(description = "LocationData", example = "[\r\n" + //

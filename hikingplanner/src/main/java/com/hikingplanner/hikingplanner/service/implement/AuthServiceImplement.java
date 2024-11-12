@@ -16,7 +16,7 @@ import com.hikingplanner.hikingplanner.dto.Request.auth.EmailCertificationReques
 import com.hikingplanner.hikingplanner.dto.Request.auth.IdCheckRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.SignInRequestDto;
 import com.hikingplanner.hikingplanner.dto.Request.auth.SignUpRequestDto;
-
+import com.hikingplanner.hikingplanner.dto.Response.ResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.CheckCertificationResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.EmailCertificationResponseDto;
 import com.hikingplanner.hikingplanner.dto.Response.auth.IdCheckResponseDto;
@@ -74,11 +74,11 @@ public class AuthServiceImplement implements AuthService{
             boolean isSuccessed = emailProvider.sendCertificationMail(email, certificationNumber);
             if(!isSuccessed) return EmailCertificationResponseDto.mailSendFail();
 
-            CertificationEntity ccerCertificationEntity = new CertificationEntity(userId, email, certificationNumber);
-            certificationRepository.save(ccerCertificationEntity);
+            CertificationEntity cerCertificationEntity = new CertificationEntity(userId, email, certificationNumber);
+            certificationRepository.save(cerCertificationEntity);
         } catch (Exception exception) {
             exception.printStackTrace();
-            // return ResponseDto.dataseError();
+            return ResponseDto.dataseError();
         }
         return EmailCertificationResponseDto.success();
     }
@@ -95,9 +95,15 @@ public class AuthServiceImplement implements AuthService{
 
             boolean isMatched = certificationEntity.getEmail().equals(email) && certificationEntity.getCertificationNumber().equals(certificationNumber);
             if (!isMatched) return CheckCertificationResponseDto.certificationFail();
+
+             // 인증 성공 시 isCertified 플래그 설정
+        certificationEntity.markAsCertified();
+        certificationRepository.save(certificationEntity);
+
+
         } catch (Exception exception) {
             exception.printStackTrace();
-            // return ResponseDto.dataseError();
+            return ResponseDto.dataseError();
         }
 
         return CheckCertificationResponseDto.success();
@@ -107,30 +113,32 @@ public class AuthServiceImplement implements AuthService{
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
         try {
             String userId =dto.getId();
+
+            //아이디 중복을 체크
             boolean isExistId = userRepository.existsByUserId(userId);
             if(isExistId) return SignUpResponseDto.duplicateId();
 
-            String email = dto.getEmail();
-            String certificationNumber = dto.getCertificationNumber();
+            // 이메일 인증 여부 확인
             CertificationEntity certificationEntity = certificationRepository.findByUserId(userId);
+            if (certificationEntity == null || !certificationEntity.isCertified()) {
+                return SignUpResponseDto.certificationFail();
+            }
 
-            boolean isMatched = certificationEntity.getEmail().equals(email) && certificationEntity.getCertificationNumber().equals(certificationNumber);
-            if(!isMatched) return SignUpResponseDto.certificationFail();
-
+            //비밀번호 암호화 작업
             String password = dto.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
 
-
-
+            //새로운 사용자 생성
             UserEntity userEntity = new UserEntity(dto);
             userRepository.save(userEntity);
 
+            //인증정보 삭제
             certificationRepository.deleteByUserId(userId);
             
         } catch (Exception exception) {
             exception.printStackTrace();
-            // return ResponseDto.dataseError();
+            return ResponseDto.dataseError();
         }
         return SignUpResponseDto.success();
     }
@@ -163,7 +171,7 @@ public class AuthServiceImplement implements AuthService{
 
     } catch (Exception exception) {
         exception.printStackTrace();
-        // return ResponseDto.dataseError();  // 데이터베이스 에러 처리
+        return ResponseDto.dataseError();  // 데이터베이스 에러 처리
     }
 
     return SignInResponseDto.success(token, userId, nickname);  // 성공 시 토큰 반환
