@@ -25,6 +25,8 @@ import com.hikingplanner.hikingplanner.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -80,8 +82,6 @@ public class BoardController {
     return ResponseEntity.ok(boards);
     }
 
-    
-
     // 게시물 전체 조회
     @Operation(summary = "게시물 전체 조회 API")
     @GetMapping("boards")
@@ -97,5 +97,31 @@ public class BoardController {
         return ResponseEntity.noContent().build();
     }
     
+
+    @Operation(summary = "게시물 수정 API")
+    @PutMapping("boards/{boardId}")
+    public ResponseEntity<BoardEntity> updateBoard(
+    @PathVariable(value ="boardId", required = false) Long boardId,
+    @RequestParam(value ="title", required = false) String title,
+    @RequestParam(value ="content", required = false) String content,
+    @RequestParam(value ="mountainName", required = false ) String mountainName,
+    @RequestParam(value = "image", required = false) MultipartFile image) {
+
+    // JWT로부터 인증된 사용자 정보를 가져옴
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String email = authentication.getName(); //사용자 이메일 가져오기
     
+    
+    UserEntity user = userService.findByEmail(email);
+
+    // 이미지 업로드 처리
+    String imageUrl = null;
+    if (image != null && !image.isEmpty()) {
+        imageUrl = s3ImageService.upload(image); // 새로운 이미지 업로드
+    }
+
+    
+    BoardEntity updatedBoard = boardService.updateBoard(boardId, title, content, mountainName, imageUrl, user);
+    return ResponseEntity.ok(updatedBoard);
+}
 }

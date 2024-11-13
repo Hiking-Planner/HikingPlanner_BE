@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +32,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글작성 API")
-    @PostMapping("comments")
+    @PostMapping("/comments")
     public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentRequestDto dto) {
         // JWT로부터 인증된 사용자 정보를 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -52,7 +53,7 @@ public class CommentController {
 
      // 댓글 삭제 API
     @Operation(summary = "댓글삭제 API")
-    @DeleteMapping("comments/{commentId}")
+    @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Long commentId) {
         // JWT로부터 인증된 사용자 정보를 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -62,4 +63,18 @@ public class CommentController {
         return ResponseEntity.ok().build();
     }
     
+    @Operation(summary = "댓글수정 API")
+    @PutMapping("/comments/{commentId}")
+public ResponseEntity<CommentResponseDto> updateComment(
+        @PathVariable("commentId") Long commentId,
+        @RequestBody CommentRequestDto dto) {
+    
+    // JWT로부터 인증된 사용자 정보를 가져옴
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String email = authentication.getName(); // JWT에 저장된 사용자 이메일
+
+    // 댓글 수정 서비스 호출
+    CommentResponseDto updatedComment = commentService.updateComment(commentId, email, dto);
+    return ResponseEntity.ok(updatedComment);
+}
 }

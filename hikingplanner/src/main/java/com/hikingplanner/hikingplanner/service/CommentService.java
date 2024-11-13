@@ -91,4 +91,32 @@ public class CommentService {
 
         commentRepository.delete(comment);
     }
+
+    public CommentResponseDto updateComment(Long commentId, String email, CommentRequestDto dto) {
+        // 댓글 조회
+        CommentEntity comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new RuntimeException("댓글을 찾을 수 없습니다: " + commentId));
+    
+        // 댓글 작성자 확인
+        if (!comment.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("댓글을 수정할 권한이 없습니다.");
+        }
+    
+        // 댓글 내용 수정
+        if (dto.getContent() != null && !dto.getContent().trim().isEmpty()) {
+            comment.setContent(dto.getContent());
+        }
+    
+        // 수정된 댓글 저장
+        CommentEntity updatedComment = commentRepository.save(comment);
+    
+        //다시 반환
+        return new CommentResponseDto(
+            updatedComment.getCommentId(),
+            updatedComment.getContent(),
+            updatedComment.getWriteDatetime(),
+            updatedComment.getUser()
+        );
+    }
+    
 }

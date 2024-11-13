@@ -78,4 +78,33 @@ public class BoardService {
     public List<BoardEntity> getBoardsByUserId(String userId) {
         return boardRepository.findByUserUserId(userId);
     }
+
+    public BoardEntity updateBoard(Long boardId, String title, String content, String mountainName, String imageUrl, UserEntity user) {
+        // 게시물 조회
+        BoardEntity board = boardRepository.findById(boardId)
+            .orElseThrow(() -> new RuntimeException("게시물을 찾을 수 없습니다: " + boardId));
+    
+        // 게시물 작성자와 수정자가 같아야됨
+        if (!board.getUser().getUserId().equals(user.getUserId())) {
+            throw new RuntimeException("게시물을 수정할 권한이 없습니다.");
+        }
+    
+        // 입력된 값만 업데이트 
+        if (title != null && !title.trim().isEmpty()) {
+            board.setTitle(title);
+        }
+        if (content != null && !content.trim().isEmpty()) {
+            board.setContent(content);
+        }
+        if (mountainName != null && !mountainName.trim().isEmpty()) {
+            board.setMountainName(mountainName);
+        }
+        if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+            board.setImageUrl(imageUrl);
+        }
+    
+       
+        return boardRepository.save(board);
+    }
+    
 }
