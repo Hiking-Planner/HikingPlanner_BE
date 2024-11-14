@@ -19,5 +19,5 @@ public class BoardResponseDto {
     private int viewCount;
     private String mountainName;
     private String imageUrl;
-    private String userNickname; // 작성자 닉네임
+    private String nickname; // 작성자 닉네임
 }

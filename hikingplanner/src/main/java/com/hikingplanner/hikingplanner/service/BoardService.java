@@ -56,7 +56,7 @@ public class BoardService {
         dto.setViewCount(board.getViewCount());
         dto.setMountainName(board.getMountainName());
         dto.setImageUrl(board.getImageUrl());
-        dto.setUserNickname(board.getUser().getNickname()); // 작성자 닉네임 설정
+        dto.setNickname(board.getUser().getNickname()); // 작성자 닉네임 설정
         return dto;
     }).collect(Collectors.toList());
 }
