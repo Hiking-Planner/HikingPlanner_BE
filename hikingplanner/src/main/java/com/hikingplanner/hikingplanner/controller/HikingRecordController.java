@@ -62,7 +62,7 @@ public class HikingRecordController {
     }
 
      // 사용자별 등산 기록 조회 API
-     @Operation(summary = "사용자 등산기록 조회", description = "로그인한 사용자의 등산기록을 조회합니다.")
+     @Operation(summary = "사용자 등산기록 조회", description = "로그인한 사용자의 등산기록을 조회한다.")
      @GetMapping("/hiking_records")
      public ResponseEntity<List<HikingRecordResponseDto>> getUserHikingRecords() {
          // JWT로부터 인증된 사용자 정보를 가져옴
