@@ -20,7 +20,7 @@ public class SignInResponseDto extends ResponseDto{
     private SignInResponseDto(String token,String userId, String nickname) {
         super();
         this.token = token;
-        this.expirationTime=3600;
+        this.expirationTime=10800;
         this.success = true;
         this.user = new UserInfo(userId, nickname); 
     }

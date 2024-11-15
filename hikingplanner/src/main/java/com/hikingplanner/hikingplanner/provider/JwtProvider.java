@@ -27,7 +27,7 @@ public class JwtProvider {
     
     public String create(String userId){ //userid를 받아와서 jwt생성
 
-        Date expiredDate = Date.from(Instant.now().plus(1,ChronoUnit.HOURS));//만료기간
+        Date expiredDate = Date.from(Instant.now().plus(3,ChronoUnit.HOURS));//만료기간
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         String jwt = Jwts.builder()
