@@ -1,5 +1,7 @@
 package com.hikingplanner.hikingplanner.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,11 +56,19 @@ public class TrailReportController {
       }
   }
 
+  @Operation(summary = "개별 신고 조회 API")
   @GetMapping("/trailReport/{report_id}")
   public ResponseEntity<TrailReportEntity> getTrailReportById(@PathVariable int report_id){
       return trailReportService.getTrailReportById(report_id)
           .map(ResponseEntity::ok)
           .orElse(ResponseEntity.notFound().build());
   }
+
+  @Operation(summary = "전체 신고 조회 API")
+    @GetMapping("/trailReports")
+    public ResponseEntity<List<TrailReportEntity>> getAllTrailReports() {
+        List<TrailReportEntity> reports = trailReportService.getAllTrailReports();
+        return ResponseEntity.ok(reports);
+    }
 
 }

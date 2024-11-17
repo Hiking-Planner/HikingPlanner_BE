@@ -2,6 +2,8 @@ package com.hikingplanner.hikingplanner.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 import com.hikingplanner.hikingplanner.dto.Response.trail.TrailReportDto;
@@ -23,11 +25,16 @@ public class TrailReportService {
         trailReportEntity.setTimestamp(trailReportDto.getTimestamp());
         return trailReportRepository.save(trailReportEntity);
         
-
     }
 
 
     public Optional<TrailReportEntity> getTrailReportById(int id) {
         return trailReportRepository.findById(id);
     }
+
+     // 전체 신고 조회
+     public List<TrailReportEntity> getAllTrailReports() {
+        return trailReportRepository.findAll();
+    }
+
 }
