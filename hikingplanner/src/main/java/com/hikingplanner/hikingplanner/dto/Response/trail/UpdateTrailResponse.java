@@ -19,5 +19,7 @@ public class UpdateTrailResponse {
   private List<List<Double>> new_path;
   private List<Double> start_point;
   private List<Double> end_point;
+  private Double total_length;
+  private Long up_time;
 
 }

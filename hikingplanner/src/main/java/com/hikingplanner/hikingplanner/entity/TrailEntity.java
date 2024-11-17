@@ -45,7 +45,7 @@ public class TrailEntity {
   public Long getMountainId() {
     return mountain.getMtid();
   }
-  public TrailEntity(Long trail_id, Mountain mountain, String trail_name, String trail_comment, String start_point, String end_point, String traildata) {
+  public TrailEntity(Long trail_id, Mountain mountain, String trail_name, String trail_comment, String start_point, String end_point, String traildata, Double total_length, Long up_time) {
     this.trail_id = trail_id;
     this.mountain = mountain;
     this.trail_name = trail_name;
@@ -53,6 +53,8 @@ public class TrailEntity {
     this.start_point = start_point;
     this.end_point = end_point;
     this.traildata = traildata;
+    this.total_length = total_length;
+    this. up_time = up_time;
   }
 
 }

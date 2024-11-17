@@ -82,7 +82,7 @@ public class UpdateTrailController {
           
           Mountain mountain = optionalMountain.get();
 
-          Long hptrail_id = 10000L; //고유번호!!!
+          Long hptrail_id = 10000L+mountainid; //고유번호!!!
           String hptrail_name = "유저들이 많이 다닌 등산로";
           String hptrail_comment = "하플 유저들의 등산기록을 바탕으로 가장 많이 다니는 등산로를 안내해드려요!";
           //trail_data, start_point, end_point는 response에서 받아서 저장
@@ -98,8 +98,10 @@ public class UpdateTrailController {
             trailEntity.setStart_point(trailResponse.getStart_point().toString());
             trailEntity.setEnd_point(trailResponse.getEnd_point().toString());
             trailEntity.setTraildata(trailResponse.getNew_path().toString());
+            trailEntity.setTotal_length(trailResponse.getTotal_length());
+            trailEntity.setUp_time(trailResponse.getUp_time());
             trailRepository.save(trailEntity);
-            logger.info("Updating trail ID 10000");
+            logger.info("Updating trail ID");
           }
           else{
             TrailEntity trailEntity = new TrailEntity(
@@ -109,10 +111,12 @@ public class UpdateTrailController {
               hptrail_comment,
               trailResponse.getStart_point().toString(),
               trailResponse.getEnd_point().toString(),
-              trailResponse.getNew_path().toString()
+              trailResponse.getNew_path().toString(),
+              trailResponse.getTotal_length(),
+              trailResponse.getUp_time()
           );
           trailRepository.save(trailEntity);
-          logger.info("Creating trail ID 10000");
+          logger.info("Creating trail ID");
 
         }
       
